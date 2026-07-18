@@ -59,12 +59,11 @@ export async function POST(
                 { status: 401 }
             );
         }
-        const payload = await request.formData();
-        const jsonObject = Object.fromEntries(payload.entries());
+        const payload = await request.json();
         const { data, error } = await supabase
             .from('personal_project_buttonofdestiny')
             .select('*')
-            .eq('uuid', jsonObject.uuid)
+            .eq('uuid', payload.uuid)
             .single();
 
         // 5. Handle Supabase errors
@@ -75,7 +74,7 @@ export async function POST(
                 { status: 500 }
             );
         }
-        await sendDateResponseViaTelegram(jsonObject as unknown as TelegramPayload, data.TELEGRAM_BOT_TOKEN, data.TELEGRAM_CHAT_ID);
+        await sendDateResponseViaTelegram(payload, data.TELEGRAM_BOT_TOKEN, data.TELEGRAM_CHAT_ID);
         return NextResponse.json({ success: true, message: "Telegram message has been sent." }, { status: 200 });
     } catch (err) {
         console.error('Unexpected error:', err);
