@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '@/app/lib/supabase';
 
 export async function GET(request: NextRequest) {
     try {
         const authHeader = request.headers.get('authorization');
-        const expectedToken = process.env.NEXT_PUBLIC_AUTH_TOKEN;
+        const expectedToken = process.env.AUTH_TOKEN;
 
         // Check if the header exists and matches "Bearer <YOUR_TOKEN>"
         if (!authHeader || authHeader !== `Bearer ${expectedToken}`) {
