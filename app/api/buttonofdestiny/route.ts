@@ -3,16 +3,6 @@ import { supabase } from '@/app/lib/supabase';
 
 export async function GET(request: NextRequest) {
     try {
-        const authHeader = request.headers.get('authorization');
-        const expectedToken = process.env.AUTH_TOKEN;
-
-        // Check if the header exists and matches "Bearer <YOUR_TOKEN>"
-        if (!authHeader || authHeader !== `Bearer ${expectedToken}`) {
-            return NextResponse.json(
-                { error: 'Unauthorized access.' },
-                { status: 401 }
-            );
-        }
         const uuid = process.env.DEFAULT_UUID as string;
         const { data, error } = await supabase
             .from('personal_project_buttonofdestiny')

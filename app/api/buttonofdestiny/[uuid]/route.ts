@@ -7,17 +7,6 @@ export async function GET(
     { params }: { params: Promise<{ uuid: string }> }
 ) {
     try {
-        const authHeader = request.headers.get('authorization');
-        const expectedToken = process.env.AUTH_TOKEN;
-
-        // Check if the header exists and matches "Bearer <YOUR_TOKEN>"
-        if (!authHeader || authHeader !== `Bearer ${expectedToken}`) {
-            return NextResponse.json(
-                { error: 'Unauthorized access.' },
-                { status: 401 }
-            );
-        }
-
         const uuid = (await params).uuid;
         const { data, error } = await supabase
             .from('personal_project_buttonofdestiny')
@@ -50,15 +39,6 @@ export async function POST(
     { params }: { params: Promise<{ uuid: string }> }
 ) {
     try {
-        const authHeader = request.headers.get('authorization');
-        const expectedToken = process.env.AUTH_TOKEN;
-        // Check if the header exists and matches "Bearer <YOUR_TOKEN>"
-        if (!authHeader || authHeader !== `Bearer ${expectedToken}`) {
-            return NextResponse.json(
-                { error: 'Unauthorized access.' },
-                { status: 401 }
-            );
-        }
         const payload = await request.json();
         const { data, error } = await supabase
             .from('personal_project_buttonofdestiny')
